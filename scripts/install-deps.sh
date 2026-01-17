@@ -11,6 +11,13 @@ info "Installing apt packages..."
 # For Local Planner (optional)
 # sudo apt install -y --no-install-recommends ros-${ROS_DISTRO}-stereo-image-proc ros-${ROS_DISTRO}-image-view || fatal "Failed to install apt packages" 
 
+# QT5 deps for Wayland (only if running on Wayland)
+if [ -n "${WAYLAND_DISPLAY}" ]; then
+    info "Installing qtwayland5 for Wayland support..."
+    sudo apt-get install --no-install-recommends -y qtwayland5 || fatal "Failed to install qtwayland5"
+else
+    info "Skipping qtwayland5 installation (not running on Wayland)"
+fi
 # Gstreamer plugins (for Gazebo camera)
 sudo apt-get install --no-install-recommends -y gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly libgstreamer-plugins-base1.0-dev || fatal "Failed to install gstreamer plugins"
 
